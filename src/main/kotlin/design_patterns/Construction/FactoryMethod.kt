@@ -40,8 +40,25 @@ fun main() {
         println(c.name)
     }
 
+    println("")
+    println("Static Factory Method in Kotlin")
+    println(NumberMaster.valueOf("123"))
 
 
+    println("")
+    println("Companion object")
+
+    val instance02 = TestClassV02.create()
+
+}
+
+
+private class TestClassV02 private constructor() {
+    companion object {
+        fun create() : TestClassV02 {
+            return TestClassV02()
+        }
+    }
 }
 
 interface Animal {
@@ -137,6 +154,16 @@ class CatFactory {
         "russian blue" -> RussianBlue(id)
         "siamese" -> Siamese(id)
         else -> throw RuntimeException("Unknown ")
+    }
+}
+
+
+//Static Factory Method in Kotlin
+class NumberMaster {
+    companion object {
+        fun valueOf(hopefullyNumber : String) : Long {
+            return hopefullyNumber.toLong()
+        }
     }
 }
 
