@@ -78,6 +78,17 @@ fun main() {
     val str005 = str004.reversed()
     println(str005)
 
+
+    println()
+    println("=== Assign a function to your variable ===")
+    val square = fun (x: Int): Long {
+        return (x * x).toLong()
+    }
+
+    println(square(3))
+
+
+
 }
 
 

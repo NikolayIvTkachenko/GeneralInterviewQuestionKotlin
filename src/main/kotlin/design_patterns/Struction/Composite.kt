@@ -18,13 +18,35 @@ fun main() {
 
 }
 
-interface InfantryUnit
+interface CanCountBullets {
+    fun bulletsLeft(): Int
+}
 
-class RiflemanV2 : InfantryUnit
+interface InfantryUnit : CanCountBullets
 
-class Sniper : InfantryUnit
+class RiflemanV2(initialMagazines: Int = 3) : InfantryUnit {
 
-class Squad(val infantryUnits: MutableList<InfantryUnit> = mutableListOf()) {
+    private val magazines = List<Magazine>(initialMagazines){
+        Magazine(5)
+    }
+
+    override fun bulletsLeft(): Int {
+        return magazines.sumBy { it.bulletsLeft() }
+    }
+
+}
+
+class Sniper(initialBullets: Int = 50) : InfantryUnit{
+
+    private val bullets = List(initialBullets) {Bullet()}
+
+    override fun bulletsLeft(): Int {
+        return bullets.size
+    }
+
+}
+
+class Squad(val infantryUnits: MutableList<InfantryUnit> = mutableListOf()) : CanCountBullets{
 
     constructor(first: InfantryUnit) : this(mutableListOf()) {
         this.infantryUnits.add(first)
@@ -38,4 +60,26 @@ class Squad(val infantryUnits: MutableList<InfantryUnit> = mutableListOf()) {
         this.infantryUnits.add(third)
     }
 
+
+    constructor(vararg units: InfantryUnit): this(mutableListOf()){
+        for (u in units){
+            this.infantryUnits.add(u)
+        }
+    }
+
+    override fun bulletsLeft(): Int {
+        TODO("Not yet implemented")
+    }
 }
+
+class Bullet
+
+class Magazine(capacity: Int): CanCountBullets {
+    private val bullets = List(capacity) {Bullet()}
+    override fun bulletsLeft(): Int {
+        return bullets.size
+    }
+}
+
+
+
